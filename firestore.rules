@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Patient triage records
+    match /patient_cases/{caseId} {
+      // Allow read for authenticated sessions (including judges and field workers)
+      allow read: if request.auth != null;
+
+      // Allow creation with defensive schema validation
+      allow create: if request.auth != null
+        && request.resource.data.patient.name is string
+        && request.resource.data.patient.name.size() > 0
+        && request.resource.data.patient.name.size() < 100
+        && request.resource.data.patient.village is string
+        && request.resource.data.vitals.temperature is number
+        && request.resource.data.vitals.spo2 is number;
+
+      // Immutability: Prevent modification or deletion of clinical audit records
+      allow update, delete: if false;
+    }
+  }
+}
