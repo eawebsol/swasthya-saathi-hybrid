@@ -233,9 +233,11 @@ Because AI systems are probabilistic, non-deterministic, and prone to silent fai
 ---
 
 ### ⏳ Phase 7: Hackathon Submission Assets & Winning Polish
-- [ ] **Task 7.1: Open-Source GitHub Repository**
-  - [ ] Clean directory, verify zero API keys in git history, add official `LICENSE` (Apache 2.0).
-  - [ ] Update `README.md` with system architecture diagrams, live demo link, and judging guide.
+- [x] **Task 7.1: Open-Source GitHub Repository**
+  - [x] Clean directory, verify zero API keys in git history, add official `LICENSE` (Apache 2.0).
+  - [x] Created `.env.example` with template environment variables.
+  - [x] Updated `README.md` with system architecture diagrams, live demo link, judging guide, and 31/31 QA certification.
+  - [x] Initialized Git repository and created initial release commit (`v1.0.0`).
 - [ ] **Task 7.2: 3-Minute Video Production**
   - [ ] 0:00 - 0:30: The Hook & Rural Healthcare Problem in India.
   - [ ] 0:30 - 1:45: Live offline demonstration (disconnect Wi-Fi, run triage on Gemini Nano in Hindi/Telugu, 15s breath timer).
