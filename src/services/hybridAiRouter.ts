@@ -300,6 +300,7 @@ Keep under 100 words.`;
     const isOnline = navigator.onLine && !this.isSimulatedOffline;
 
     let extractedText = '';
+    let apiError: Error | null = null;
 
     if (isOnline && (await this.cloudAdapter.isAvailable())) {
       try {
@@ -330,25 +331,30 @@ Output ONLY the extracted test lines. Do not add intro or outro conversation.`;
         extractedText = res.text;
       } catch (err: any) {
         console.warn('Gemini Vision multimodal call failed:', err);
+        apiError = err;
       }
     }
 
-    // Fallback if offline or API key missing
+    // Defensive handling if OCR output is empty or failed
     if (!extractedText.trim()) {
       if (!isOnline) {
         throw new Error('OFFLINE_PHOTO_OCR: Camera photo OCR requires internet connectivity to invoke Gemini 2.0 Flash Vision. Please reconnect or use the manual pathology profiles below.');
       }
-      if (!this.cloudAdapter.getApiKey()) {
-        // Fallback for local demo/testing when API key not yet configured in .env
-        extractedText = `PATIENT LAB REPORT (EXTRACTED VIA DEMO PREVIEW):
-Hemoglobin (Hb): 9.1 g/dL [LOW]
-Total Leukocyte Count (WBC): 7,200 /µL [NORMAL]
-Platelet Count: 105,000 /µL [LOW]
-RBC Count: 3.8 million/µL [LOW]
-ESR: 28 mm/hr [HIGH]
-Serum Creatinine: 1.1 mg/dL [NORMAL]
-Fasting Blood Sugar: 142.0 mg/dL [HIGH]`;
+
+      if (apiError) {
+        const msg = apiError.message || '';
+        if (msg.includes('403') || msg.includes('Permission') || msg.includes('ACCESS_DENIED') || msg.includes('API_KEY')) {
+          throw new Error('GEMINI_KEY_RESTRICTED: Google Cloud returned "Permission Denied" on the default project key for generativelanguage.googleapis.com. Please click "Set Gemini Vision Key" at the top to configure your free Gemini API key from Google AI Studio (aistudio.google.com/apikey).');
+        } else {
+          throw new Error(`GEMINI_VISION_ERROR: ${msg || 'Gemini Vision API request failed.'} Please enter a valid Gemini API key.`);
+        }
       }
+
+      if (!this.cloudAdapter.getApiKey()) {
+        throw new Error('GEMINI_KEY_MISSING: Gemini 2.0 Flash Vision requires an API key to read paper photo reports. Please click "Set Gemini Vision Key" at the top to enter your free key from Google AI Studio, or use the quick sample button below.');
+      }
+
+      throw new Error('PHOTO_OCR_EMPTY: No diagnostic text could be extracted from this photo. Please ensure the document is clearly legible and in focus.');
     }
 
     // Pass the extracted OCR text into the 7-profile pathology catalog analyzer

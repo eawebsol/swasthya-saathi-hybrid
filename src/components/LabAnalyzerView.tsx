@@ -160,23 +160,31 @@ export const LabAnalyzerView: React.FC<LabAnalyzerViewProps> = ({
       {showKeyModal && (
         <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 space-y-3 text-xs">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-purple-900">Gemini 2.0 Flash Vision Key (Cloud OCR)</span>
+            <span className="font-bold text-purple-900">Gemini 2.0 Flash Vision Key (Cloud Multimodal OCR)</span>
             <button onClick={() => setShowKeyModal(false)} className="text-slate-500 hover:text-slate-800 font-bold">✕</button>
           </div>
           <p className="text-slate-600">
-            For live photo OCR of paper reports via Google Cloud Gemini 2.0 Flash Vision, supply your API key (or set <code className="bg-purple-100 px-1 rounded">VITE_GEMINI_API_KEY</code> in <code className="bg-purple-100 px-1 rounded">.env</code>).
+            For live camera OCR of paper reports via Google Cloud Gemini 2.0 Flash Vision, supply your free API key from Google AI Studio. 
+            <a 
+              href="https://aistudio.google.com/apikey" 
+              target="_blank" 
+              rel="noreferrer"
+              className="text-purple-700 underline font-semibold ml-1 inline-flex items-center"
+            >
+              Get Free Gemini Key ↗
+            </a>
           </p>
           <div className="flex gap-2">
             <input
               type="password"
               value={apiKeyInput}
               onChange={(e) => setApiKeyInput(e.target.value)}
-              placeholder="AIzaSy..."
+              placeholder="Paste your Gemini AI Studio Key (AIzaSy...)"
               className="flex-1 p-2 rounded-lg border border-purple-300 font-mono text-xs focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
             <button
               onClick={handleSaveApiKey}
-              className="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700"
+              className="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 shadow-sm"
             >
               Save Key
             </button>
@@ -254,11 +262,48 @@ export const LabAnalyzerView: React.FC<LabAnalyzerViewProps> = ({
 
         {/* Error / Rejection Banner */}
         {errorMessage && (
-          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs sm:text-sm flex items-start space-x-2.5 animate-pulse-slow">
-            <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-            <div>
-              <strong className="block font-bold text-red-900">Validation Notice:</strong>
-              <span>{errorMessage}</span>
+          <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs sm:text-sm space-y-2.5">
+            <div className="flex items-start space-x-2.5">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <strong className="block font-bold text-amber-950">Laboratory Analysis Notice:</strong>
+                <span>{errorMessage}</span>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 pt-1 pl-7">
+              <button
+                onClick={() => setShowKeyModal(true)}
+                className="px-3 py-1.5 rounded-lg bg-purple-600 text-white font-bold text-xs hover:bg-purple-700 transition flex items-center space-x-1.5 shadow-sm"
+              >
+                <Key className="w-3.5 h-3.5" />
+                <span>Enter Free Gemini Key</span>
+              </button>
+              <button
+                onClick={() => {
+                  const sampleHematology = `HEMATOLOGY REPORT
+Blood Picture:
+Hgb (Hemoglobin) : 17.2 g/dl
+RBCs (Red Blood Cells) : 5.48 x 100^3 Cells/uL
+Hct (Hematocrit) : 42.9 %
+MCV : 80.3 fL/cell
+MCH : 31.4 pg/cell
+MCHC : 36.1 g/dl
+RDW : 13.2 %
+Plt (Platelet) : 222 x 10^3/mm3
+WBCs (Leukocytes) : 5.6 x 10^3/mm3
+Neutrophils : 35 %
+Lymphocytes : 56.9 %
+Monocytes : 4.6 %
+Eosinophils : 3 %
+Basophils : 0.5 %`;
+                  setReportText(sampleHematology);
+                  setErrorMessage(null);
+                  handleRunAnalysis(sampleHematology);
+                }}
+                className="px-3 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-900 font-bold text-xs hover:bg-amber-100 transition shadow-sm"
+              >
+                Load Sample Hematology Report & Analyze
+              </button>
             </div>
           </div>
         )}

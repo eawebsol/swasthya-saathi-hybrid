@@ -44,7 +44,7 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
     parameters: [
       {
         parameter: 'Hemoglobin (Hb)',
-        aliases: ['hemoglobin', 'hb'],
+        aliases: ['hemoglobin', 'hgb', 'hb'],
         unit: 'g/dL',
         normalRange: '12.0 - 15.5 g/dL',
         lowThreshold: 11.0,
@@ -54,7 +54,7 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
       },
       {
         parameter: 'Total Leukocyte Count (WBC / TLC)',
-        aliases: ['total leukocyte', 'wbc', 'tlc', 'white blood cells'],
+        aliases: ['total leukocyte', 'wbc', 'wbcs', 'tlc', 'white blood cells', 'leukocytes'],
         unit: '/µL',
         normalRange: '4,000 - 11,000 /µL',
         lowThreshold: 4000,
@@ -64,7 +64,7 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
       },
       {
         parameter: 'Platelet Count',
-        aliases: ['platelet', 'platelets', 'plt count', 'platelet count'],
+        aliases: ['platelet', 'platelets', 'plt', 'plt count', 'platelet count'],
         unit: '/µL',
         normalRange: '150,000 - 450,000 /µL',
         lowThreshold: 100000,
@@ -74,7 +74,7 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
       },
       {
         parameter: 'RBC Count',
-        aliases: ['rbc', 'red blood cell', 'rbc count'],
+        aliases: ['rbc', 'rbcs', 'red blood cell', 'red blood cells', 'rbc count'],
         unit: 'million/µL',
         normalRange: '4.0 - 5.5 million/µL',
         lowThreshold: 3.8,
@@ -83,7 +83,7 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
       },
       {
         parameter: 'Packed Cell Volume (PCV / Hematocrit)',
-        aliases: ['pcv', 'hematocrit', 'packed cell volume'],
+        aliases: ['pcv', 'hct', 'hematocrit', 'packed cell volume'],
         unit: '%',
         normalRange: '36.0 - 48.0 %',
         lowThreshold: 36.0,
@@ -99,6 +99,33 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
         lowThreshold: 80.0,
         highThreshold: 100.0,
         clinicalSignificance: 'Red cell size. Low (< 80) indicates Iron Deficiency; high (> 100) indicates B12/Folate deficiency.'
+      },
+      {
+        parameter: 'MCH (Mean Corpuscular Hemoglobin)',
+        aliases: ['mch', 'mean corpuscular hemoglobin'],
+        unit: 'pg/cell',
+        normalRange: '27.0 - 34.0 pg/cell',
+        lowThreshold: 27.0,
+        highThreshold: 34.0,
+        clinicalSignificance: 'Average amount of hemoglobin per red blood cell.'
+      },
+      {
+        parameter: 'MCHC',
+        aliases: ['mchc', 'mean corpuscular hemoglobin concentration'],
+        unit: 'g/dL',
+        normalRange: '32.0 - 37.0 g/dL',
+        lowThreshold: 32.0,
+        highThreshold: 37.0,
+        clinicalSignificance: 'Average concentration of hemoglobin inside a given volume of red blood cells.'
+      },
+      {
+        parameter: 'RDW (Red Cell Distribution Width)',
+        aliases: ['rdw', 'red cell distribution width'],
+        unit: '%',
+        normalRange: '11.5 - 14.5 %',
+        lowThreshold: 11.5,
+        highThreshold: 14.5,
+        clinicalSignificance: 'Variation in red blood cell size. Elevated RDW is an early sign of iron deficiency.'
       },
       {
         parameter: 'ESR (Erythrocyte Sed. Rate)',
@@ -128,6 +155,15 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
         clinicalSignificance: 'High levels indicate viral infection (e.g. viral fever, typhoid, tuberculosis).'
       },
       {
+        parameter: 'Monocytes',
+        aliases: ['monocytes', 'monocyte'],
+        unit: '%',
+        normalRange: '2 - 10 %',
+        highThreshold: 10.0,
+        lowThreshold: 2.0,
+        clinicalSignificance: 'Phagocytic cells. High levels indicate recovery from acute infection or chronic condition.'
+      },
+      {
         parameter: 'Eosinophils',
         aliases: ['eosinophils', 'eosinophil'],
         unit: '%',
@@ -135,6 +171,15 @@ ESR: 42 mm/hr [CRITICAL HIGH - Active inflammation]`,
         highThreshold: 6.0,
         criticalHigh: 15.0,
         clinicalSignificance: 'High indicates allergic conditions, asthma, or intestinal parasitic worms.'
+      },
+      {
+        parameter: 'Basophils',
+        aliases: ['basophils', 'basophil'],
+        unit: '%',
+        normalRange: '0 - 2 %',
+        highThreshold: 2.0,
+        lowThreshold: 0.0,
+        clinicalSignificance: 'Granulocytes involved in inflammatory and allergic reactions.'
       }
     ],
     dietaryGuidelines: [
