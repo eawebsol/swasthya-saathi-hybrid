@@ -8,6 +8,10 @@
 [![Firebase](https://img.shields.io/badge/Firebase-AI%20Logic%20%7C%20Firestore%20%7C%20Remote%20Config-orange.svg)](https://firebase.google.com/)
 [![Gemini](https://img.shields.io/badge/Gemini-Nano%20(On--Device)%20%2B%202.0%20Flash%20(Cloud)-blueviolet.svg)](https://deepmind.google/technologies/gemini/)
 
+<div align="center">
+  <img src="thumbnail.jpg" alt="Swasthya Saathi - Hybrid AI Rural Healthcare" width="100%" />
+</div>
+
 > 🌐 **Live Production Deployment:** [https://swasthya-saathi-hybrid.web.app](https://swasthya-saathi-hybrid.web.app)  
 > 📱 **PWA Compatible:** Works 100% offline on ₹7,000 Android Go devices (2GB RAM) with zero cloud data egress.
 
